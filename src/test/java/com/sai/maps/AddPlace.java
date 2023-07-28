@@ -1,28 +1,13 @@
 package com.sai.maps;
 
+import com.sai.files.MapPayload;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class AddPlace {
 
     public static void main(String[] args) {
-
-        String requestBody = "{\n" +
-                "  \"location\": {\n" +
-                "    \"lat\": -38.383494,\n" +
-                "    \"lng\": 33.427362\n" +
-                "  },\n" +
-                "  \"accuracy\": 50,\n" +
-                "  \"name\": \"Sai Krishnan Automation Frontline house\",\n" +
-                "  \"phone_number\": \"(+91) 983 893 3937\",\n" +
-                "  \"address\": \"29, side layout, cohen 09\",\n" +
-                "  \"types\": [\n" +
-                "    \"shoe park\",\n" +
-                "    \"shop\"\n" +
-                "  ],\n" +
-                "  \"website\": \"http://google.com\",\n" +
-                "  \"language\": \"French-IN\"\n" +
-                "}\n";
 
         RestAssured.baseURI = "https://rahulshettyacademy.com";
 
@@ -32,14 +17,16 @@ public class AddPlace {
                 .relaxedHTTPSValidation()
                 .queryParam("key","qaclick123")
                 .header("Content-Type","application/json")
-                .body(requestBody)
+                .body(MapPayload.addPlacePayload())
                 .when()
                 .post("/maps/api/place/add/json")
                 .then()
                 .log()
                 .all()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(200)
+                .body("scope", equalTo("APP"))
+                .header("Server", "Apache/2.4.52 (Ubuntu)");
     }
 
 }
