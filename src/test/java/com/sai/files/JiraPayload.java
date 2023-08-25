@@ -1,13 +1,15 @@
 package com.sai.files;
 
+import org.json.simple.JSONObject;
+
 public class JiraPayload {
 
     public static String createSession(){
-        String session = "{\n" +
+        String credentials = "{\n" +
                 "    \"username\": \"krishnansai99\",\n" +
                 "    \"password\": \"ALLthebest@123\"\n" +
                 "}";
-        return session;
+        return credentials;
     }
 
     public static String addComment(){
